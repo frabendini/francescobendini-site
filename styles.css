@@ -91,3 +91,6 @@ body strong,body b{font-weight:400}
 .artist-title:not([href]),.artist-title:not([href]):hover,.artist-title:not([href]):active,.artist-title:not([href]).is-pressed{color:#222;cursor:default;pointer-events:none;transition:none}
 
 @media(max-width:767px){.site-nav{margin-top:60px}}
+
+/* Mobile homepage: match the desktop menu's spacing proportions. */
+@media(max-width:767px){nav.site-nav{gap:28px}nav.site-nav>a:first-child{margin-bottom:0}nav.site-nav .portfolio-links{gap:7px;margin-block:12px}nav.site-nav a{line-height:1.35}}
