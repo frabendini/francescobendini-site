@@ -65,3 +65,23 @@ body strong,body b{font-weight:400}
 /* Persistent artist title; reserve its original layout height. */
 .layout header{position:relative;padding-top:71px}.artist-title{position:fixed;top:54px;left:max(24px,calc((100% - 980px)/2));z-index:950}
 @media(max-width:767px){.layout header{padding-top:calc(clamp(34px,10vw,72px) * 2.1)}.artist-title{top:48px;left:10px}}
+
+/* Pasta: independent, responsive image carousels. */
+.pasta-gallery{max-width:960px}
+.pasta-work{margin:0 0 0}
+.pasta-carousel{position:relative}
+.pasta-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;scroll-behavior:smooth;overscroll-behavior-x:contain}
+.pasta-track::-webkit-scrollbar{display:none}
+.pasta-photo{flex:0 0 calc((100% - 32px)/3);min-width:0;aspect-ratio:1;overflow:hidden;padding:0;border:0;background:#fff;cursor:zoom-in;scroll-snap-align:start}
+.pasta-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s ease}
+@media(hover:hover){.pasta-photo:hover img{transform:scale(1.035)}}
+.pasta-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:2;border:0;background:rgba(255,255,255,.82);color:#222;font:30px/1 Arial,sans-serif;width:30px;height:40px;padding:0;cursor:pointer}
+.pasta-prev{left:0}.pasta-next{right:0}
+.pasta-caption{margin:0;min-height:30px;padding:5px 0 6px}
+.pasta-lightbox{position:fixed;inset:0;z-index:2000;border:0;padding:0;width:100%;max-width:none;height:100%;max-height:none;background:#fff;overflow:hidden}
+.pasta-lightbox::backdrop{background:#fff}
+.pasta-lightbox img{display:block;width:100%;height:100%;object-fit:contain;padding:32px 48px}
+.pasta-lightbox button{position:absolute;border:0;background:rgba(255,255,255,.9);color:#222;cursor:pointer;font:30px Arial,sans-serif;padding:6px 12px}
+.pasta-lightbox .close{top:12px;right:12px}.pasta-lightbox .prev{left:8px;top:50%;transform:translateY(-50%)}.pasta-lightbox .next{right:8px;top:50%;transform:translateY(-50%)}
+@media(max-width:767px){.pasta-photo{flex-basis:100%}.pasta-caption{padding-bottom:14px}.pasta-track{gap:16px}}
+@media(prefers-reduced-motion:reduce){.pasta-track{scroll-behavior:auto}.pasta-photo img{transition:none}}

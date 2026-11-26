@@ -2,7 +2,7 @@
 (() => {
   const script = document.currentScript;
   const root = new URL(".", script.src);
-  const routes = new Set(["", "about/", "statement/", "portrait/", "work-work-work/"].map(path => new URL(path, root).pathname));
+  const routes = new Set(["", "about/", "statement/", "portrait/", "work-work-work/", "pasta/"].map(path => new URL(path, root).pathname));
   const main = document.querySelector("main.layout");
   const header = main?.querySelector("header");
   const title = header?.querySelector(".artist-title");
@@ -123,4 +123,13 @@
     if (!eligible(url)) { location.reload(); return; }
     navigate(url, {pop: true, position: positions.get(event.state?.[entryKey]) || event.state?.[stateKey] || [0, 0]});
   });
+})();
+
+/* Carousel controls work on direct loads and on dynamically inserted pages. */
+(() => {
+ let dialog, photos=[], index=0, opener;
+ function show(){if(dialog&&photos[index]){const image=dialog.querySelector("img");image.src=photos[index].src;image.alt=photos[index].alt;}}
+ function open(photo){opener=photo;photos=[...photo.closest(".pasta-track").querySelectorAll("img")];index=photos.indexOf(photo.querySelector("img"));if(!dialog){dialog=document.createElement("dialog");dialog.className="pasta-lightbox";dialog.setAttribute("aria-label","Photograph viewer");dialog.innerHTML='<img alt=""><button class="close" type="button" aria-label="Close">×</button><button class="prev" type="button" aria-label="Previous">‹</button><button class="next" type="button" aria-label="Next">›</button>';document.body.append(dialog);dialog.addEventListener("click",e=>{if(e.target.closest(".close"))dialog.close();else if(e.target.closest(".prev"))step(-1);else if(e.target.closest(".next"))step(1)});dialog.addEventListener("keydown",e=>{if(e.key==="ArrowLeft")step(-1);else if(e.key==="ArrowRight")step(1)});dialog.addEventListener("close",()=>{dialog.querySelector("img").removeAttribute("src");opener?.focus({preventScroll:true})});}show();dialog.showModal();}
+ function step(direction){index=(index+direction+photos.length)%photos.length;show();}
+ document.addEventListener("click",e=>{const arrow=e.target.closest?.(".pasta-arrow");if(arrow){const track=arrow.closest(".pasta-carousel").querySelector(".pasta-track");const photo=track.querySelector(".pasta-photo");if(photo)track.scrollBy({left:(photo.getBoundingClientRect().width+16)*(arrow.classList.contains("pasta-next")?1:-1),behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth"});return;}const photo=e.target.closest?.(".pasta-photo");if(photo)open(photo);});
 })();
