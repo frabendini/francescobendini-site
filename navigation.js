@@ -128,8 +128,40 @@
 /* Carousel controls work on direct loads and on dynamically inserted pages. */
 (() => {
  let dialog, photos=[], index=0, opener;
+ const tracks=new WeakMap();
+ const mod=(n,m)=>((n%m)+m)%m;
+ function stride(track){const a=track.children[0],b=track.children[1];return a&&b?b.getBoundingClientRect().left-a.getBoundingClientRect().left:0;}
+ function jump(track,left){track.scrollTo({left,behavior:"instant"});}
+ function normalize(track){const state=tracks.get(track);if(!state||!track.isConnected)return;const s=stride(track);if(!s)return;const slot=Math.round(track.scrollLeft/s);if(slot<state.count||slot>=2*state.count)jump(track,(state.count+mod(slot,state.count))*s);}
+ function initialize(track){
+   if(tracks.has(track))return;
+   const originals=[...track.querySelectorAll(".pasta-photo")],count=originals.length;
+   if(count<2)return;
+   originals.forEach((photo,i)=>photo.dataset.photoIndex=String(i));
+   const copies=()=>originals.map(photo=>{const clone=photo.cloneNode(true);clone.dataset.loopCopy="true";clone.setAttribute("aria-hidden","true");clone.tabIndex=-1;return clone;});
+   track.prepend(...copies());track.append(...copies());
+   const state={count,originals,timer:0,lastStride:stride(track)};tracks.set(track,state);
+   jump(track,count*state.lastStride);
+   track.addEventListener("scroll",()=>{clearTimeout(state.timer);state.timer=setTimeout(()=>normalize(track),160);},{passive:true});
+   track.addEventListener("scrollend",()=>{clearTimeout(state.timer);normalize(track);});
+   if(window.ResizeObserver){const observer=new ResizeObserver(()=>{if(!track.isConnected){observer.disconnect();return;}const s=stride(track);if(s&&Math.abs(s-state.lastStride)>.5){const old=state.lastStride||s;const i=mod(Math.round(track.scrollLeft/old),count);state.lastStride=s;jump(track,(count+i)*s);}});observer.observe(track);}
+ }
+ function scan(){document.querySelectorAll(".pasta-track").forEach(initialize);}
+ scan();
+ const main=document.querySelector("main.layout");
+ if(main)new MutationObserver(scan).observe(main,{childList:true,subtree:true});
+ function slide(track,direction){
+   initialize(track);
+   const state=tracks.get(track);if(!state)return;
+   const s=stride(track);if(!s)return;
+   let slot=Math.round(track.scrollLeft/s);
+   const max=track.scrollWidth-track.clientWidth;
+   if((slot+direction)*s>max+1||slot+direction<0){slot=state.count+mod(slot,state.count);jump(track,slot*s);}
+   track.scrollTo({left:(slot+direction)*s,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth"});
+ }
  function show(){if(dialog&&photos[index]){const image=dialog.querySelector("img");image.src=photos[index].src;image.alt=photos[index].alt;}}
- function open(photo){opener=photo;photos=[...photo.closest(".pasta-track").querySelectorAll("img")];index=photos.indexOf(photo.querySelector("img"));if(!dialog){dialog=document.createElement("dialog");dialog.className="pasta-lightbox";dialog.setAttribute("aria-label","Photograph viewer");dialog.innerHTML='<img alt=""><button class="close" type="button" aria-label="Close">×</button><button class="prev" type="button" aria-label="Previous">‹</button><button class="next" type="button" aria-label="Next">›</button>';document.body.append(dialog);dialog.addEventListener("click",e=>{if(e.target.closest(".close"))dialog.close();else if(e.target.closest(".prev"))step(-1);else if(e.target.closest(".next"))step(1)});dialog.addEventListener("keydown",e=>{if(e.key==="ArrowLeft")step(-1);else if(e.key==="ArrowRight")step(1)});dialog.addEventListener("close",()=>{dialog.querySelector("img").removeAttribute("src");opener?.focus({preventScroll:true})});}show();dialog.showModal();}
- function step(direction){index=(index+direction+photos.length)%photos.length;show();}
- document.addEventListener("click",e=>{const arrow=e.target.closest?.(".pasta-arrow");if(arrow){const track=arrow.closest(".pasta-carousel").querySelector(".pasta-track");const photo=track.querySelector(".pasta-photo");if(photo){const max=Math.max(0,track.scrollWidth-track.clientWidth);const direction=arrow.classList.contains("pasta-next")?1:-1;const stride=photo.getBoundingClientRect().width+parseFloat(getComputedStyle(track).columnGap||0);const current=Math.max(0,Math.min(max,track.scrollLeft));const target=direction>0?(current>=max-2?0:Math.min(max,current+stride)):(current<=2?max:Math.max(0,current-stride));track.scrollTo({left:target,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth"});}return;}const photo=e.target.closest?.(".pasta-photo");if(photo)open(photo);});
+ function open(photo){opener=photo;const track=photo.closest(".pasta-track");initialize(track);const state=tracks.get(track);photos=(state?state.originals:[...track.querySelectorAll(".pasta-photo")]).map(p=>p.querySelector("img"));index=Number(photo.dataset.photoIndex||0);if(!dialog){dialog=document.createElement("dialog");dialog.className="pasta-lightbox";dialog.setAttribute("aria-label","Photograph viewer");dialog.innerHTML='<img alt=""><button class="close" type="button" aria-label="Close">×</button><button class="prev" type="button" aria-label="Previous">‹</button><button class="next" type="button" aria-label="Next">›</button>';document.body.append(dialog);dialog.addEventListener("click",e=>{if(e.target.closest(".close"))dialog.close();else if(e.target.closest(".prev"))step(-1);else if(e.target.closest(".next"))step(1)});dialog.addEventListener("keydown",e=>{if(e.key==="ArrowLeft")step(-1);else if(e.key==="ArrowRight")step(1)});dialog.addEventListener("close",()=>{dialog.querySelector("img").removeAttribute("src");if(opener?.isConnected)opener.focus({preventScroll:true})});}show();dialog.showModal();}
+ function step(direction){index=mod(index+direction,photos.length);show();}
+ document.addEventListener("click",e=>{const arrow=e.target.closest?.(".pasta-arrow");if(arrow){slide(arrow.closest(".pasta-carousel").querySelector(".pasta-track"),arrow.classList.contains("pasta-next")?1:-1);return;}const photo=e.target.closest?.(".pasta-photo");if(photo)open(photo);});
+ document.addEventListener("keydown",e=>{if(e.target.matches?.(".pasta-track")&&(e.key==="ArrowLeft"||e.key==="ArrowRight")){e.preventDefault();slide(e.target,e.key==="ArrowRight"?1:-1);}});
 })();
