@@ -89,3 +89,5 @@ body strong,body b{font-weight:400}
 
 /* The artist name is not a link on the home page. */
 .artist-title:not([href]),.artist-title:not([href]):hover,.artist-title:not([href]):active,.artist-title:not([href]).is-pressed{color:#222;cursor:default;pointer-events:none;transition:none}
+
+@media(max-width:767px){.site-nav{margin-top:60px}}
