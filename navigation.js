@@ -2,7 +2,7 @@
 (() => {
   const script = document.currentScript;
   const root = new URL(".", script.src);
-  const routes = new Set(["", "about/", "statement/", "portrait/", "work-work-work/", "pasta/"].map(path => new URL(path, root).pathname));
+  const routes = new Set(["", "about/", "statement/", "portrait/", "work-work-work/", "pasta/", "gorgos/"].map(path => new URL(path, root).pathname));
   const main = document.querySelector("main.layout");
   const header = main?.querySelector("header");
   const title = header?.querySelector(".artist-title");
