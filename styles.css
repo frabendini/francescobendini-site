@@ -1,3 +1,5 @@
+@font-face{font-family:Aileron;src:url("./fonts/Aileron/Aileron-SemiBold.woff2") format("woff2");font-weight:600;font-style:normal;font-display:block}
+@font-face{font-family:Aileron;src:url("./fonts/Aileron/Aileron-SemiBoldItalic.woff2") format("woff2");font-weight:600;font-style:italic;font-display:block}
 @font-face{font-family:Aileron;src:url("./fonts/Aileron/Aileron-Light.woff2") format("woff2");font-weight:300;font-style:normal;font-display:block}
 
 @font-face{font-family:Aileron;src:url("./fonts/Aileron/Aileron-LightItalic.woff2") format("woff2");font-weight:300;font-style:italic;font-display:block}
@@ -61,7 +63,7 @@
 
 /* Editorial emphasis: native Aileron Regular, with underlined links. */
 body strong,body b{font-weight:400}
-.about a,.content a{font-weight:400;text-decoration:underline}
+.about a,.content a{font-weight:600;text-decoration:underline}.about a strong,.about a b,.content a strong,.content a b{font-weight:inherit}
 
 /* Persistent artist title; reserve its original layout height. */
 .layout header{position:relative;padding-top:71px}.artist-title{position:fixed;top:54px;left:max(24px,calc((100% - 980px)/2));z-index:950}
