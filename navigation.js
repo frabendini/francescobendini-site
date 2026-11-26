@@ -165,3 +165,16 @@
  document.addEventListener("click",e=>{const arrow=e.target.closest?.(".pasta-arrow");if(arrow){slide(arrow.closest(".pasta-carousel").querySelector(".pasta-track"),arrow.classList.contains("pasta-next")?1:-1);return;}const photo=e.target.closest?.(".pasta-photo");if(photo)open(photo);});
  document.addEventListener("keydown",e=>{if(e.target.matches?.(".pasta-track")&&(e.key==="ArrowLeft"||e.key==="ArrowRight")){e.preventDefault();slide(e.target,e.key==="ArrowRight"?1:-1);}});
 })();
+
+/* Explicit mobile press feedback, independent of sticky touch hover. */
+(() => {
+ const title=document.querySelector(".artist-title");if(!title)return;
+ const mobile=matchMedia("(max-width:767px)");let releaseTimer;
+ const clear=()=>{clearTimeout(releaseTimer);title.classList.remove("is-pressed");};
+ title.addEventListener("pointerdown",e=>{if(!mobile.matches||e.button!==0)return;clear();title.classList.add("is-pressed");});
+ window.addEventListener("pointerup",()=>{if(title.classList.contains("is-pressed")){clearTimeout(releaseTimer);releaseTimer=setTimeout(clear,100);}},true);
+ window.addEventListener("pointercancel",clear,true);
+ window.addEventListener("blur",clear);
+ window.addEventListener("pagehide",clear);
+ mobile.addEventListener("change",clear);
+})();
