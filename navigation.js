@@ -72,7 +72,17 @@
       const bodyNodes = [...layout.childNodes].filter(n => n !== nextHeader).map(n => cloneContent(n, dest));
       if (!pop) history.pushState({[entryKey]: newEntry(), [stateKey]: [0, 0]}, "", dest.href);
       activeUrl = location.href;
-      title.href = new URL(nextTitle.getAttribute("href"), dest).href;
+      title.classList.remove("is-pressed");
+      if (nextTitle.hasAttribute("href")) {
+        title.href = new URL(nextTitle.getAttribute("href"), dest).href;
+        title.removeAttribute("aria-current");
+        title.setAttribute("aria-label", "Francesco Bendini — home");
+      } else {
+        title.removeAttribute("href");
+        title.setAttribute("aria-current", "page");
+        title.setAttribute("aria-label", "Francesco Bendini");
+        title.blur();
+      }
       for (const n of [...header.childNodes]) if (n !== title) n.remove();
       header.append(...headerNodes);
       for (const n of [...main.childNodes]) if (n !== header) n.remove();
@@ -171,7 +181,7 @@
  const title=document.querySelector(".artist-title");if(!title)return;
  const mobile=matchMedia("(max-width:767px)");let releaseTimer;
  const clear=()=>{clearTimeout(releaseTimer);title.classList.remove("is-pressed");};
- title.addEventListener("pointerdown",e=>{if(!mobile.matches||e.button!==0)return;clear();title.classList.add("is-pressed");});
+ title.addEventListener("pointerdown",e=>{if(!mobile.matches||e.button!==0||!title.hasAttribute("href"))return;clear();title.classList.add("is-pressed");});
  window.addEventListener("pointerup",()=>{if(title.classList.contains("is-pressed")){clearTimeout(releaseTimer);releaseTimer=setTimeout(clear,100);}},true);
  window.addEventListener("pointercancel",clear,true);
  window.addEventListener("blur",clear);

@@ -86,3 +86,6 @@ body strong,body b{font-weight:400}
 .pasta-lightbox .close{top:12px;right:12px}.pasta-lightbox .prev{left:8px;top:50%;transform:translateY(-50%)}.pasta-lightbox .next{right:8px;top:50%;transform:translateY(-50%)}
 @media(max-width:767px){.pasta-photo{flex-basis:100%}.pasta-caption{padding-bottom:14px}.pasta-track{gap:16px}}
 @media(prefers-reduced-motion:reduce){.pasta-track{scroll-behavior:auto}.pasta-photo img{transition:none}}
+
+/* The artist name is not a link on the home page. */
+.artist-title:not([href]),.artist-title:not([href]):hover,.artist-title:not([href]):active,.artist-title:not([href]).is-pressed{color:#222;cursor:default;pointer-events:none;transition:none}
