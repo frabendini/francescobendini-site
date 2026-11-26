@@ -65,7 +65,7 @@ body strong,body b{font-weight:400}
 
 /* Persistent artist title; reserve its original layout height. */
 .layout header{position:relative;padding-top:71px}.artist-title{position:fixed;top:54px;left:max(24px,calc((100% - 980px)/2));z-index:950}
-@media(max-width:767px){.layout header{padding-top:calc(clamp(38px,11vw,79px) * 2.1)}.artist-title{top:48px;left:17px}}
+@media(max-width:767px){.layout header{padding-top:calc(clamp(38px,11vw,79px) * 2.1)}.artist-title{top:48px;left:17px;transform:scaleX(1.05);transform-origin:left center}}
 
 /* Pasta: independent, responsive image carousels. */
 .pasta-gallery{max-width:960px}
