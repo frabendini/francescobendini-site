@@ -68,7 +68,7 @@ body strong,body b{font-weight:400}
 
 /* Pasta: independent, responsive image carousels. */
 .pasta-gallery{max-width:960px}
-.pasta-work{margin:0 0 0}
+.pasta-work{margin:0 0 24px}
 .pasta-carousel{position:relative}
 .pasta-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;scroll-behavior:smooth;overscroll-behavior-x:contain}
 .pasta-track::-webkit-scrollbar{display:none}
