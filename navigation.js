@@ -20,7 +20,7 @@
   function linkUrl(a) {
     if (!a || !a.hasAttribute("href") || a.hasAttribute("download") || (a.target && a.target !== "_self")) return null;
     const url = new URL(a.href, location.href);
-    return eligible(url) && url.href !== activeUrl ? url : null;
+    return eligible(url) ? url : null;
   }
   function rememberScroll(persist = false) {
     if (pending || location.href !== activeUrl) return;
@@ -105,13 +105,18 @@
     const url = linkUrl(event.target.closest?.("a[href]"));
     if (!url) return;
     event.preventDefault();
+    if (url.href === activeUrl && location.href === activeUrl) {
+      ++serial;
+      pending = false;
+      return;
+    }
     navigate(url, {keyboard: event.detail === 0});
   });
   document.addEventListener("pointerover", event => {
     if (event.pointerType === "touch" || navigator.connection?.saveData || document.getElementById("floating-sculpture")?.dataset.ready !== "true") return;
     const url = linkUrl(event.target.closest?.("a[href]"));
     clearTimeout(prefetchTimer);
-    if (url) prefetchTimer = setTimeout(() => load(url).catch(() => {}), 100);
+    if (url && url.href !== activeUrl) prefetchTimer = setTimeout(() => load(url).catch(() => {}), 100);
   });
   addEventListener("popstate", event => {
     const url = new URL(location.href);
