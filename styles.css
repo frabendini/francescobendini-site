@@ -1,9 +1,9 @@
-@font-face{font-family:Aileron;src:url("./fonts/Aileron/Aileron-Light.woff2") format("woff2");font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:Aileron;src:url("./fonts/Aileron/Aileron-Light.woff2") format("woff2");font-weight:300;font-style:normal;font-display:block}
 
-@font-face{font-family:Aileron;src:url("./fonts/Aileron/Aileron-LightItalic.woff2") format("woff2");font-weight:300;font-style:italic;font-display:swap}
-@font-face{font-family:Aileron;src:url("./fonts/Aileron/Aileron-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:Aileron;src:url("./fonts/Aileron/Aileron-Italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
-@font-face{font-family:ProgressiveText;src:url("./fonts/progressivetext/ProgressiveText.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:Aileron;src:url("./fonts/Aileron/Aileron-LightItalic.woff2") format("woff2");font-weight:300;font-style:italic;font-display:block}
+@font-face{font-family:Aileron;src:url("./fonts/Aileron/Aileron-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:block}
+@font-face{font-family:Aileron;src:url("./fonts/Aileron/Aileron-Italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:block}
+@font-face{font-family:ProgressiveText;src:url("./fonts/progressivetext/ProgressiveText.ttf") format("truetype");font-weight:400;font-style:normal;font-display:block}
 :root{color-scheme:light}*{box-sizing:border-box}html{background:#fff}body{margin:0;min-height:100vh;background:#fff;color:#222;font-family:Aileron,Arial,sans-serif;font-weight:300}
 .layout{margin-left:min(12vw,205px);padding:54px 24px 110px 0}
 .artist-title{display:inline-flex;flex-direction:row;gap:.22em;align-items:flex-start;white-space:nowrap;font-family:ProgressiveText,Georgia,serif;font-size:clamp(40px,4.6vw,76px);font-weight:400;line-height:1;letter-spacing:0;color:#222;text-decoration:none;transition:color .18s}
