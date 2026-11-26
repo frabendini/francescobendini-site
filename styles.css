@@ -93,4 +93,4 @@ body strong,body b{font-weight:400}
 @media(max-width:767px){.site-nav{margin-top:60px}}
 
 /* Mobile homepage: match the desktop menu's spacing proportions. */
-@media(max-width:767px){nav.site-nav{gap:28px}nav.site-nav>a:first-child{margin-bottom:0}nav.site-nav .portfolio-links{gap:7px;margin-block:12px}nav.site-nav a{font-size:16px;line-height:1.35}}
+@media(max-width:767px){.site-nav{gap:28px}.site-nav>a:first-child{margin-bottom:0}.site-nav .portfolio-links{gap:7px;margin-block:12px}.site-nav a,.site-nav span{font-size:16px;line-height:1.35}body,.about,.about h1,.about h2,.about p{font-size:16px}.about-cv{margin-top:60px}.about-cv > h1:first-child{line-height:1.35;letter-spacing:.065em}}
