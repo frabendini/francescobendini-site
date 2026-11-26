@@ -2,8 +2,6 @@
 <html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffffff"><title>Font test — Francesco Bendini</title><meta name="robots" content="noindex, nofollow"><link rel="stylesheet" href="../styles.css"><script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"}}</script><script type="module" src="../sculpture.js"></script><link rel="icon" href="../images/favicon.ico" sizes="16x16 32x32 48x48"><link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png"><link rel="icon" type="image/png" sizes="96x96" href="../images/favicon-96.png"><link rel="icon" type="image/svg+xml" sizes="any" href="../images/favicon.svg"><link rel="apple-touch-icon" sizes="180x180" href="../images/favicon-180.png"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300;1,300&amp;family=Inter:ital,wght@0,300;1,300&amp;family=Roboto:ital,wght@0,300;1,300&amp;display=swap">
 <link rel="stylesheet" href="https://fontlibrary.org/face/tenderness">
 <style>
-@font-face{font-family:Aileron;src:url("https://reinhart1010.github.io/aileron/fonts/Aileron-Light.woff2") format("woff2");font-weight:300;font-style:normal;font-display:swap}
-@font-face{font-family:Aileron;src:url("https://reinhart1010.github.io/aileron/fonts/Aileron-LightItalic.woff2") format("woff2");font-weight:300;font-style:italic;font-display:swap}
 .font-test-controls{position:fixed;bottom:12px;left:12px;z-index:1000;background:white;border:1px solid #aaa;padding:8px 10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;max-width:calc(100% - 24px);font:13px Arial,sans-serif}
 .font-test-controls select{font:inherit;color:#222;background:white}
 #font-status{font-size:11px;color:#555}
@@ -94,7 +92,7 @@
 <p>Mar 2025 - Jun 2025 Assistant to the artist Marzia Migliora in Turin (TO)</p>
 <p>Nov 2023 - Feb 2024 Assistant to the artist Giulia Cenci in Cortona (AR)</p>
 <p>Nov 2022 - Jan 2023 Assistant to the artist Davide Rivalta in Bologna (BO)</p>
-</article></main><div id="floating-sculpture" aria-label="Scultura tridimensionale interattiva"></div><div class="font-test-controls"><label for="font-choice">Font di prova</label><select id="font-choice"><option value="Univers">Univers Light (originale)</option><option value="Aileron">Aileron Light</option><option value="Hanken Grotesk">Hanken Grotesk Light</option><option value="Inter">Inter Light</option><option value="Roboto">Roboto Light</option><option value="TendernessRegular">Tenderness Regular</option></select><span id="font-status" role="status" aria-live="polite"></span></div>
+</article></main><div id="floating-sculpture" aria-label="Scultura tridimensionale interattiva"></div><div class="font-test-controls"><label for="font-choice">Font di prova</label><select id="font-choice"><option value="Aileron">Aileron Light (attuale)</option><option value="Hanken Grotesk">Hanken Grotesk Light</option><option value="Inter">Inter Light</option><option value="Roboto">Roboto Light</option><option value="TendernessRegular">Tenderness Regular</option></select><span id="font-status" role="status" aria-live="polite"></span></div>
 <script>
 const picker=document.getElementById("font-choice"), article=document.querySelector(".about"), status=document.getElementById("font-status");
 let revision=0;
