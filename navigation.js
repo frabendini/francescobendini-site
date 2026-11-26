@@ -7,7 +7,10 @@
   const header = main?.querySelector("header");
   const title = header?.querySelector(".artist-title");
   if (!main || !header || !title || !window.fetch || !history.pushState || !routes.has(location.pathname)) return;
-  const stateKey = "__portfolioScroll";
+  const stateKey = "__portfolioScroll", entryKey = "__portfolioEntry";
+  const positions = new Map();
+  let entryCounter = 0;
+  const newEntry = () => Date.now().toString(36) + "-" + (++entryCounter);
   const cache = new Map();
   let activeUrl = location.href, serial = 0, pending = false, scrollFrame = 0, prefetchTimer = 0;
   let animation;
@@ -19,12 +22,15 @@
     const url = new URL(a.href, location.href);
     return eligible(url) && url.href !== activeUrl ? url : null;
   }
-  function rememberScroll() {
+  function rememberScroll(persist = false) {
     if (pending || location.href !== activeUrl) return;
-    history.replaceState({...history.state, [stateKey]: [scrollX, scrollY]}, "", location.href);
+    const position = [scrollX, scrollY];
+    const entry = history.state?.[entryKey];
+    if (entry) positions.set(entry, position);
+    if (persist) history.replaceState({...history.state, [entryKey]: entry || newEntry(), [stateKey]: position}, "", location.href);
   }
   history.scrollRestoration = "manual";
-  rememberScroll();
+  rememberScroll(true);
   addEventListener("scroll", () => {
     if (!scrollFrame) scrollFrame = requestAnimationFrame(() => { scrollFrame = 0; rememberScroll(); });
   }, {passive: true});
@@ -55,7 +61,7 @@
   }
   async function navigate(url, {pop = false, position = [0, 0], keyboard = false} = {}) {
     const id = ++serial;
-    if (!pop) rememberScroll();
+    if (!pop) rememberScroll(true);
     pending = true;
     try {
       const {doc, layout, url: dest} = await load(url);
@@ -64,7 +70,7 @@
       const nextTitle = nextHeader.querySelector(".artist-title");
       const headerNodes = [...nextHeader.childNodes].filter(n => n !== nextTitle).map(n => cloneContent(n, dest));
       const bodyNodes = [...layout.childNodes].filter(n => n !== nextHeader).map(n => cloneContent(n, dest));
-      if (!pop) history.pushState({[stateKey]: [0, 0]}, "", dest.href);
+      if (!pop) history.pushState({[entryKey]: newEntry(), [stateKey]: [0, 0]}, "", dest.href);
       activeUrl = location.href;
       title.href = new URL(nextTitle.getAttribute("href"), dest).href;
       for (const n of [...header.childNodes]) if (n !== title) n.remove();
@@ -110,6 +116,6 @@
   addEventListener("popstate", event => {
     const url = new URL(location.href);
     if (!eligible(url)) { location.reload(); return; }
-    navigate(url, {pop: true, position: event.state?.[stateKey] || [0, 0]});
+    navigate(url, {pop: true, position: positions.get(event.state?.[entryKey]) || event.state?.[stateKey] || [0, 0]});
   });
 })();
