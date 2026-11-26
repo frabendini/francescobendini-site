@@ -39,11 +39,11 @@
     const existing = cache.get(key);
     if (existing && Date.now() - existing.time < 30000) return existing.promise;
     const promise = fetch(key, {credentials: "same-origin", headers: {"Accept": "text/html"}}).then(async response => {
-      if (!response.ok || !response.headers.get("content-type")?.includes("text/html") || !eligible(new URL(response.url))) throw Error("Page unavailable");
+      if (!response.ok || !eligible(new URL(response.url || key))) throw Error("Page unavailable");
       const doc = new DOMParser().parseFromString(await response.text(), "text/html");
       const layout = doc.querySelector("main.layout");
-      if (!layout?.querySelector("header .artist-title") || !doc.querySelector("#floating-sculpture") || !doc.querySelector('script[src$="navigation.js"]')) throw Error("Unsupported page layout");
-      return {doc, layout, url: new URL(response.url)};
+      if (!layout?.querySelector("header .artist-title") || !doc.querySelector("#floating-sculpture")) throw Error("Unsupported page layout");
+      return {doc, layout, url: new URL(response.url || key)};
     }).catch(error => { cache.delete(key); throw error; });
     cache.set(key, {time: Date.now(), promise});
     return promise;
@@ -102,14 +102,14 @@
   }
   document.addEventListener("click", event => {
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    const url = linkUrl(event.target.closest("a[href]"));
+    const url = linkUrl(event.target.closest?.("a[href]"));
     if (!url) return;
     event.preventDefault();
     navigate(url, {keyboard: event.detail === 0});
   });
   document.addEventListener("pointerover", event => {
-    if (event.pointerType === "touch" || navigator.connection?.saveData) return;
-    const url = linkUrl(event.target.closest("a[href]"));
+    if (event.pointerType === "touch" || navigator.connection?.saveData || document.getElementById("floating-sculpture")?.dataset.ready !== "true") return;
+    const url = linkUrl(event.target.closest?.("a[href]"));
     clearTimeout(prefetchTimer);
     if (url) prefetchTimer = setTimeout(() => load(url).catch(() => {}), 100);
   });
