@@ -51,8 +51,8 @@
   function cloneContent(node, base) {
     const copy = document.importNode(node, true);
     if (copy.nodeType === 1) {
-      for (const el of [copy, ...copy.querySelectorAll("[href], [src]")]) {
-        for (const attr of ["href", "src"]) {
+      for (const el of [copy, ...copy.querySelectorAll("[href], [src], [data-full]")]) {
+        for (const attr of ["href", "src", "data-full"]) {
           if (el.hasAttribute(attr)) el.setAttribute(attr, new URL(el.getAttribute(attr), base).href);
         }
       }
@@ -159,7 +159,7 @@
    if((slot+direction)*s>max+1||slot+direction<0){slot=state.count+mod(slot,state.count);jump(track,slot*s);}
    track.scrollTo({left:(slot+direction)*s,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth"});
  }
- function show(){if(dialog&&photos[index]){const image=dialog.querySelector("img");image.src=photos[index].src;image.alt=photos[index].alt;}}
+ function show(){if(dialog&&photos[index]){const image=dialog.querySelector("img");image.src=photos[index].src;image.alt=photos[index].alt;const chosen=photos[index];const full=chosen.dataset.full;if(full){const large=new Image();large.onload=()=>{if(dialog.open&&photos[index]===chosen)image.src=large.src;};large.src=full;}}}
  function open(photo){opener=photo;const track=photo.closest(".pasta-track");initialize(track);const state=tracks.get(track);photos=(state?state.originals:[...track.querySelectorAll(".pasta-photo")]).map(p=>p.querySelector("img"));index=Number(photo.dataset.photoIndex||0);if(!dialog){dialog=document.createElement("dialog");dialog.className="pasta-lightbox";dialog.setAttribute("aria-label","Photograph viewer");dialog.innerHTML='<img alt=""><button class="close" type="button" aria-label="Close">×</button><button class="prev" type="button" aria-label="Previous">‹</button><button class="next" type="button" aria-label="Next">›</button>';document.body.append(dialog);dialog.addEventListener("click",e=>{if(e.target.closest(".close"))dialog.close();else if(e.target.closest(".prev"))step(-1);else if(e.target.closest(".next"))step(1)});dialog.addEventListener("keydown",e=>{if(e.key==="ArrowLeft")step(-1);else if(e.key==="ArrowRight")step(1)});dialog.addEventListener("close",()=>{dialog.querySelector("img").removeAttribute("src");if(opener?.isConnected)opener.focus({preventScroll:true})});}show();dialog.showModal();}
  function step(direction){index=mod(index+direction,photos.length);show();}
  document.addEventListener("click",e=>{const arrow=e.target.closest?.(".pasta-arrow");if(arrow){slide(arrow.closest(".pasta-carousel").querySelector(".pasta-track"),arrow.classList.contains("pasta-next")?1:-1);return;}const photo=e.target.closest?.(".pasta-photo");if(photo)open(photo);});
