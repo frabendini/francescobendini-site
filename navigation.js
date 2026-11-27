@@ -75,10 +75,14 @@
       title.classList.remove("is-pressed");
       if (nextTitle.hasAttribute("href")) {
         title.href = new URL(nextTitle.getAttribute("href"), dest).href;
+        title.removeAttribute("role");
+        title.removeAttribute("tabindex");
         title.removeAttribute("aria-current");
         title.setAttribute("aria-label", "Francesco Bendini — home");
       } else {
         title.removeAttribute("href");
+        title.setAttribute("role", "link");
+        title.setAttribute("tabindex", "0");
         title.setAttribute("aria-current", "page");
         title.setAttribute("aria-label", "Francesco Bendini");
         title.blur();
@@ -182,7 +186,7 @@
  const title=document.querySelector(".artist-title");if(!title)return;
  const mobile=matchMedia("(max-width:767px)");let releaseTimer;
  const clear=()=>{clearTimeout(releaseTimer);title.classList.remove("is-pressed");};
- title.addEventListener("pointerdown",e=>{if(!mobile.matches||e.button!==0||!title.hasAttribute("href"))return;clear();title.classList.add("is-pressed");});
+ title.addEventListener("pointerdown",e=>{if(!mobile.matches||e.button!==0||!title.hasAttribute("href")&&!title.hasAttribute("aria-current"))return;clear();title.classList.add("is-pressed");});
  window.addEventListener("pointerup",()=>{if(title.classList.contains("is-pressed")){clearTimeout(releaseTimer);releaseTimer=setTimeout(clear,100);}},true);
  window.addEventListener("pointercancel",clear,true);
  window.addEventListener("blur",clear);
