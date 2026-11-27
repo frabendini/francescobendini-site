@@ -11,8 +11,8 @@
 .artist-title{display:inline-flex;flex-direction:row;gap:.22em;align-items:flex-start;white-space:nowrap;font-family:ProgressiveText,Georgia,serif;font-size:clamp(40px,4.6vw,76px);font-weight:400;line-height:1;letter-spacing:0;color:#222;text-decoration:none;transition:color .18s}
 .artist-title:hover,.artist-title:active{color:#999}
 @media(max-width:767px){.artist-title,.artist-title:hover,.artist-title:active,.artist-title:focus,.artist-title:focus-visible,.artist-title:visited{color:#222;-webkit-tap-highlight-color:transparent}.artist-title.is-pressed{color:#999;transition:none}}
-.site-nav{display:flex;flex-direction:column;align-items:flex-start;gap:12px;margin-top:38px}
-.site-nav a{font-size:16px;line-height:1.3;letter-spacing:.025em;text-decoration:none;color:#222}
+.site-nav{display:flex;flex-direction:column;align-items:flex-start;margin-top:38px}
+.site-nav a{text-decoration:none}
 .site-nav a:hover,.site-nav a:focus-visible{color:#999}
 .about{margin-top:48px;max-width:980px;font-size:15px;line-height:1.35}
 .about h1,.about h2{font-size:inherit;font-weight:300;margin:0}
@@ -22,21 +22,18 @@
 .about h2.cv-label+h2{margin-top:0}
 .about a{color:inherit;text-decoration:underline}
 #floating-sculpture{position:fixed;right:20px;top:var(--sculpture-top,300px);width:220px;height:220px;z-index:900;overflow:hidden;touch-action:none;cursor:grab;background:transparent}#floating-sculpture:active{cursor:grabbing}#floating-sculpture canvas{display:block;width:100%;height:100%}
-@media(max-width:767px){.layout{margin-left:10px;padding:48px 12px 110px 0}.artist-title{flex-direction:column;gap:0;font-size:clamp(38px,11vw,79px);line-height:1.05}.site-nav{margin-top:48px;margin-left:7px;gap:30px}.site-nav a{font-size:16px;letter-spacing:.065em}.site-nav a:last-child{order:-1;margin-bottom:45px}.about{margin-top:48px;margin-left:7px;font-size:14px;line-height:1.35;max-width:none}.about h1{margin-bottom:32px}#floating-sculpture{width:170px;height:170px;right:12px}}
+@media(max-width:767px){.layout{margin-left:10px;padding:48px 12px 110px 0}.artist-title{flex-direction:column;gap:0;font-size:clamp(38px,11vw,79px);line-height:1.05}.about{max-width:none}#floating-sculpture{width:170px;height:170px;right:12px}}
 
 /* Mobile About/CV: proportions from the full-size Flazio reference. */
 @media(max-width:767px){
-.about{margin-left:7px;margin-right:5px;margin-top:48px;font-size:15px;line-height:1.36;}
+.about{margin-left:7px;margin-right:5px;line-height:1.36;}
 .about h1{margin-bottom:40px;}
 .about h1~p{margin-bottom:20px;}
-.about h2{margin-top:20px;}
-.about h2~p{margin:0;}
 .about h2.cv-label{margin-top:40px;margin-bottom:20px;}
-.about h2.cv-label+h2{margin-top:0;}
 }
 
 /* Desktop typography */
-@media(min-width:768px){body{font-size:15px}.artist-title{font-size:71px}.site-nav a,.about,.about h1,.about h2,.about p{font-size:15px}}
+@media(min-width:768px){.artist-title{font-size:71px}}
 
 @media(min-width:768px){.layout{margin-left:max(24px,calc((100% - 980px)/2));}}
 
@@ -44,14 +41,10 @@
 
 /* Home menu groups */
 .site-nav{gap:19.5px;margin-left:0}.site-nav .portfolio-links{display:flex;flex-direction:column;align-items:flex-start;gap:0}.site-nav a,.site-nav span{font-size:15px;line-height:1.3;letter-spacing:.025em;color:#222}.site-nav a:last-child{order:0;margin-bottom:0}.site-nav a:hover,.site-nav a:focus-visible{color:#999}
-@media(max-width:767px){.site-nav{margin-left:7px;gap:30px}.site-nav a,.site-nav span{letter-spacing:.065em}.site-nav .portfolio-links{gap:30px}.site-nav>a:first-child{margin-bottom:45px}}
+@media(max-width:767px){.site-nav{margin-left:7px}.site-nav a,.site-nav span{letter-spacing:.065em}}
 
 /* Desktop spacing and typography */
-@media(min-width:768px){body,.site-nav a,.site-nav span,.about,.about h1,.about h2,.about p{font-size:16px}.site-nav,.about{margin-top:24px}.site-nav{gap:8px}.site-nav .portfolio-links{gap:0}}
-
-@media(min-width:768px){.site-nav{margin-top:57px;gap:28px}.about{margin-top:72px}.site-nav .portfolio-links{gap:8px}}
-
-@media(min-width:768px){.site-nav .portfolio-links{margin-block:12px;gap:4px}}
+@media(min-width:768px){.site-nav{gap:28px}.site-nav .portfolio-links{margin-block:12px}}
 
 @media(min-width:768px){body,.site-nav a,.site-nav span,.about,.about h1,.about h2,.about p{font-size:15px}}
 
@@ -86,16 +79,14 @@ body strong,body b{font-weight:400}
 .pasta-lightbox img{display:block;width:100%;height:100%;object-fit:contain;padding:32px 48px}
 .pasta-lightbox button{position:absolute;border:0;background:rgba(255,255,255,.9);color:#222;cursor:pointer;font:30px Arial,sans-serif;padding:6px 12px}
 .pasta-lightbox .close{top:12px;right:12px}.pasta-lightbox .prev{left:8px;top:50%;transform:translateY(-50%)}.pasta-lightbox .next{right:8px;top:50%;transform:translateY(-50%)}
-@media(max-width:767px){.pasta-photo{flex-basis:100%}.pasta-caption{padding-bottom:14px}.pasta-track{gap:16px}}
+@media(max-width:767px){.pasta-photo{flex-basis:100%}.pasta-caption{padding-bottom:14px}}
 @media(prefers-reduced-motion:reduce){.pasta-track{scroll-behavior:auto}.pasta-photo img{transition:none}}
 
 /* The artist name is not a link on the home page. */
 .artist-title:not([href]),.artist-title:not([href]):hover,.artist-title:not([href]):active,.artist-title:not([href]).is-pressed{color:#222;cursor:default;pointer-events:none;transition:none}
 
-@media(max-width:767px){.site-nav{margin-top:60px}}
-
 /* Mobile homepage: match the desktop menu's spacing proportions. */
-@media(max-width:767px){.site-nav{gap:28px}.site-nav>a:first-child{margin-bottom:0}.site-nav .portfolio-links{gap:7px;margin-block:12px}.site-nav a,.site-nav span{font-size:16px;line-height:1.35}body,.about,.about h1,.about h2,.about p{font-size:16px}.about-cv{margin-top:60px}.about-cv > h1:first-child{line-height:1.35;letter-spacing:.065em}}
+@media(max-width:767px){.site-nav{margin-top:60px;gap:28px}.site-nav>a:first-child{margin-bottom:0}.site-nav .portfolio-links{gap:7px;margin-block:12px}.site-nav a,.site-nav span{font-size:16px;line-height:1.35}body,.about,.about h1,.about h2,.about p{font-size:16px}.about-cv{margin-top:60px}.about-cv > h1:first-child{line-height:1.35;letter-spacing:.065em}}
 
 /* Copyright: keep the notice at the page bottom, below long content. */
 .layout:has(> .page-copyright){display:flex;flex-direction:column;min-height:100vh;min-height:100dvh;padding-bottom:20px}

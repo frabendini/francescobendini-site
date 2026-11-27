@@ -159,7 +159,8 @@
  function scan(){document.querySelectorAll(".pasta-track").forEach(initialize);}
  scan();
  const main=document.querySelector("main.layout");
- if(main)new MutationObserver(scan).observe(main,{childList:true,subtree:true});
+ // Pages are inserted as direct children of main; carousel clones need no rescan.
+ if(main)new MutationObserver(scan).observe(main,{childList:true});
  function slide(track,direction){
    initialize(track);
    const state=tracks.get(track);if(!state)return;
