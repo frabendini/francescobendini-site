@@ -96,3 +96,9 @@ body strong,body b{font-weight:400}
 
 /* Mobile homepage: match the desktop menu's spacing proportions. */
 @media(max-width:767px){.site-nav{gap:28px}.site-nav>a:first-child{margin-bottom:0}.site-nav .portfolio-links{gap:7px;margin-block:12px}.site-nav a,.site-nav span{font-size:16px;line-height:1.35}body,.about,.about h1,.about h2,.about p{font-size:16px}.about-cv{margin-top:60px}.about-cv > h1:first-child{line-height:1.35;letter-spacing:.065em}}
+
+/* Copyright: keep the notice at the page bottom, below long content. */
+.layout:has(> .page-copyright){display:flex;flex-direction:column;min-height:100vh;min-height:100dvh;padding-bottom:20px}
+.layout > .page-copyright{margin-top:auto!important;padding-top:48px;flex-shrink:0}
+.layout:has(> img[src$="/portrait.webp"]) > .home-copyright{position:fixed;bottom:20px;z-index:2;pointer-events:none}
+@media(max-width:767px){.layout:has(> .page-copyright){padding-bottom:12px}body:has(.layout > img[src$="/portrait.webp"]){height:100dvh;min-height:100dvh}.layout:has(> img[src$="/portrait.webp"]) > .home-copyright{bottom:12px!important}}
